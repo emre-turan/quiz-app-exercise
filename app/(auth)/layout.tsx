@@ -1,3 +1,4 @@
+import Logo from "@/components/logo";
 import { Container } from "@/components/ui/container";
 
 export default function AuthLayout({
@@ -6,8 +7,13 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container className="flex justify-center items-center h-screen">
-      {children}
-    </Container>
+    <>
+      <div className="pt-4 ps-4">
+        <Logo />
+      </div>
+      <Container className="flex justify-center items-center h-screen">
+        {children}
+      </Container>
+    </>
   );
 }
