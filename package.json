@@ -1,7 +1,4 @@
 {
-  "name": "quiz-app-exercise",
-  "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
