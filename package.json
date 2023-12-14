@@ -1,11 +1,12 @@
 {
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.28.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@vercel/postgres": "^0.5.1",
     "class-variance-authority": "^0.7.0",
