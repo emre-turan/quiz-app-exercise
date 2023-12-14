@@ -3,14 +3,11 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { UserButton } from "@clerk/nextjs";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Divide } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
 
-async function Header() {
-  const user = await currentUser();
-  console.log(user);
-
+async function Header({ user }: any) {
   return (
     <Container variant="breakpointPadded">
       <div className="flex mx-auto items-center justify-between">
@@ -34,12 +31,17 @@ function SignInButton() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+
   return (
     <main>
-      <Header />
+      <Header user={user} />
       <Container>
-        <h1 className="text-3xl font-bold"> Quiz App</h1>
+        <div className="flex flex-col gap-4 items-center justify-center">
+          <h1 className="text-3xl font-bold"> Quiz App</h1>
+          {user ? <div>Welcome {user.firstName} </div> : ""}
+        </div>
       </Container>
     </main>
   );
