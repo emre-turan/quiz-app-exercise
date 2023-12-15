@@ -1,0 +1,56 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Question {
+  id        Int           @id @default(autoincrement())
+  content   String
+  answers   Answer[]
+  attempts  QuizAttempt[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([id])
+}
+
+model Answer {
+  id         Int          @id @default(autoincrement())
+  content    String
+  isCorrect  Boolean
+  questionId Int
+  question   Question     @relation(fields: [questionId], references: [id])
+  attempts   QuizAttempt[]
+
+  @@index([id])
+  @@index([questionId])
+}
+
+model User {
+  id       Int           @id @default(autoincrement())
+  email    String        @unique
+  name     String
+  attempts QuizAttempt[]
+}
+
+model QuizAttempt {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  questionId Int
+  answerId   Int
+  timestamp  DateTime @default(now())
+
+  user     User    @relation(fields: [userId], references: [id])
+  question Question @relation(fields: [questionId], references: [id])
+  answer   Answer   @relation(fields: [answerId], references: [id])
+
+  @@index([userId, questionId, answerId])
+  @@index([questionId])
+  @@index([answerId])
+}
+
