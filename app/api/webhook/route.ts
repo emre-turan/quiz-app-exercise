@@ -2,6 +2,10 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -27,6 +31,7 @@ export async function POST(req: Request) {
 
   // Get the body
   const payload = await req.json();
+  console.log("Webhook payload:", payload);
   const body = JSON.stringify(payload);
 
   // Create a new Svix instance with your secret.
@@ -54,6 +59,75 @@ export async function POST(req: Request) {
 
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
   console.log("Webhook body:", body);
+
+  // Sync with database
+  try {
+    if (eventType === "user.created" || eventType === "user.updated") {
+      const { id, first_name, last_name, image_url, email_addresses } =
+        evt.data;
+      const email =
+        email_addresses && email_addresses[0]
+          ? email_addresses[0].email_address
+          : "";
+
+      if (id && first_name && last_name && image_url && email) {
+        console.log("Syncing user data with database...");
+        console.log(`ID: ${id}`);
+        console.log(`First Name: ${first_name}`);
+        console.log(`Last Name: ${last_name}`);
+        console.log(`Image URL: ${image_url}`);
+        console.log(`Email: ${email}`);
+
+        await prisma.user.upsert({
+          where: { clerkId: id },
+          update: {
+            name: `${first_name} ${last_name}`,
+            imageUrl: image_url,
+            firstName: first_name,
+            lastName: last_name,
+            email: email,
+          },
+          create: {
+            clerkId: id,
+            email: email,
+            name: `${first_name} ${last_name}`,
+            imageUrl: image_url,
+            firstName: first_name,
+            lastName: last_name,
+          },
+        });
+        console.log("User data synced successfully.");
+      } else {
+        console.error("Missing required fields in payload");
+        return new Response("Error occured", {
+          status: 400,
+        });
+      }
+    } else if (eventType === "user.deleted") {
+      const { id } = evt.data;
+
+      if (id) {
+        console.log("Deleting user from database...");
+        console.log(`ID: ${id}`);
+
+        await prisma.user.delete({
+          where: { clerkId: id },
+        });
+
+        console.log("User deleted successfully.");
+      } else {
+        console.error("Missing required fields in payload");
+        return new Response("Error occured", {
+          status: 400,
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Error updating database:", err);
+    return new Response("Error occured", {
+      status: 500,
+    });
+  }
 
   return new Response("", { status: 200 });
 }
