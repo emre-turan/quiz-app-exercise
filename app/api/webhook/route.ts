@@ -72,12 +72,6 @@ export async function POST(req: Request) {
 
       if (id && first_name && last_name && image_url && email) {
         console.log("Syncing user data with database...");
-        console.log(`ID: ${id}`);
-        console.log(`First Name: ${first_name}`);
-        console.log(`Last Name: ${last_name}`);
-        console.log(`Image URL: ${image_url}`);
-        console.log(`Email: ${email}`);
-
         await prisma.user.upsert({
           where: { clerkId: id },
           update: {
