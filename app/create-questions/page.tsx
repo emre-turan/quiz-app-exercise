@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/container";
 
 import { db } from "@/lib/db";
-import Question from "./_components/question";
+import Question from "./_components/display-questions";
 import Form from "./_components/form";
 
 const CreateQuestionsPage = async () => {
