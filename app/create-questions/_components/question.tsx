@@ -1,5 +1,6 @@
 import { deleteQuestion } from "@/app/actions/delete-questions";
-import { Button } from "@/components/ui/button";
+
+import FormDeleteButton from "./form-delete-button";
 
 interface QuestionProps {
   id: number;
@@ -14,9 +15,7 @@ const Question = ({ id, content }: QuestionProps) => {
       className="flex items-center gap-4 space-y-4"
     >
       <p>Content: {content} </p>
-      <Button size="sm" variant="destructive" type="submit">
-        Delete
-      </Button>
+      <FormDeleteButton />
     </form>
   );
 };
