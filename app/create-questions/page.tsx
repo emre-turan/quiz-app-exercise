@@ -9,17 +9,15 @@ const CreateQuestionsPage = async () => {
 
   return (
     <Container>
-      <div>
-        <Form />
-        <div>
-          {questions.map((question) => (
-            <Question
-              key={question.id}
-              id={question.id}
-              content={question.content}
-            />
-          ))}
-        </div>
+      <Form />
+      <div className="mt-4 px-8">
+        {questions.map((question) => (
+          <Question
+            key={question.id}
+            id={question.id}
+            content={question.content}
+          />
+        ))}
       </div>
     </Container>
   );

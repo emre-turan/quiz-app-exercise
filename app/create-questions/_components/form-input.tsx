@@ -5,26 +5,37 @@ import { Label } from "@/components/ui/label";
 import { useFormStatus } from "react-dom";
 
 interface FormInputProps {
+  label?: string;
+  name: string;
+  placeholder: string;
   errors?: {
-    content?: string[];
+    [key: string]: string[];
   };
+  className?: string;
 }
 
-const FormInput = ({ errors }: FormInputProps) => {
+const FormInput = ({
+  className,
+  errors,
+  label,
+  name,
+  placeholder,
+}: FormInputProps) => {
   const { pending } = useFormStatus();
   return (
     <div>
-      <Label htmlFor="content">Content</Label>
+      <Label htmlFor={name}>{label}</Label>
       <Input
-        id="content"
-        name="content"
+        id={name}
+        name={name}
         required
-        placeholder="Enter a Content"
+        placeholder={placeholder}
         disabled={pending}
+        className={className}
       />
-      {errors?.content ? (
+      {errors?.[name] ? (
         <div>
-          {errors.content.map((error: string) => (
+          {errors[name].map((error: string) => (
             <p key={error} className="text-rose-500">
               {error}
             </p>
