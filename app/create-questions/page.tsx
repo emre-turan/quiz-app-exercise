@@ -4,7 +4,6 @@ import { db } from "@/lib/db";
 import Question from "./_components/display-questions";
 import Form from "./_components/form";
 
-
 const CreateQuestionsPage = async () => {
   const questions = await db.question.findMany({
     include: {
@@ -15,7 +14,7 @@ const CreateQuestionsPage = async () => {
   return (
     <Container>
       <Form />
-      <div className="mt-4 px-8">
+      <div>
         {questions.map((question) => (
           <Question
             key={question.id}

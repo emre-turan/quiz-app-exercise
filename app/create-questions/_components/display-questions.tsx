@@ -1,6 +1,14 @@
 import { deleteQuestion } from "@/app/actions/delete-questions";
 
-import FormDeleteButton from "./form-delete-button";
+import { FormSubmit } from "@/components/form/form-submit";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Trash } from "lucide-react";
 
 interface AnswerProps {
   content: string;
@@ -16,23 +24,40 @@ interface QuestionProps {
 const Question = ({ id, content, answers }: QuestionProps) => {
   const deleteQuestionWithId = deleteQuestion.bind(null, id);
   return (
-    <form
-      action={deleteQuestionWithId}
-      className="flex items-center gap-4 space-y-4"
-    >
-      <p>Content: {content} </p>
-      <ul>
-        {answers.map((answer, index) => (
-          <li
-            key={index}
-            className={answer.isCorrect ? "text-green-600" : "text-red-600"}
-          >
-            {answer.content} {answer.isCorrect ? "(Correct)" : "(Incorrect)"}
-          </li>
-        ))}
-      </ul>
-      <FormDeleteButton />
-    </form>
+    <Card className="my-4">
+      <CardHeader>
+        <CardTitle>Questions</CardTitle>
+        <CardDescription>
+          You can see the answer and questions saved on the database
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form action={deleteQuestionWithId}>
+          <div className="flex items-center justify-between ">
+            <div className="flex flex-col gap-4 my-4">
+              <p>Question: {content} </p>
+              <ul className="grid grid-cols-2 gap-x-8">
+                {answers.map((answer, index) => (
+                  <li
+                    key={index}
+                    className={
+                      answer.isCorrect ? "text-green-600" : "text-red-600"
+                    }
+                  >
+                    - {answer.content}{" "}
+                    {answer.isCorrect ? "(Correct)" : "(Incorrect)"}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <FormSubmit variant="destructive" className="w-full">
+            Delete
+            <Trash className="h-4 w-4 ml-2" />
+          </FormSubmit>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

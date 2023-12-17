@@ -3,7 +3,7 @@
 import { createQuestion } from "@/app/actions/create-questions";
 
 import FormInput from "./form-input";
-import FormCheckbox from "./form-checkbox";
+import FormCheckbox from "../../../components/form/form-checkbox";
 import { useAction } from "@/hooks/use-action";
 
 import {
@@ -52,7 +52,7 @@ const Form = () => {
   };
 
   return (
-    <Card className="max-w-md mx-auto mt-4">
+    <Card className="mt-4">
       <CardHeader>
         <CardTitle>Submit a Question</CardTitle>
         <CardDescription>
@@ -81,7 +81,7 @@ const Form = () => {
                   name={`option${index + 1}`}
                   placeholder={`Option ${index + 1}`}
                   errors={fieldErrors}
-                  className="w-60"
+                  className="w-96"
                 />
                 <FormCheckbox
                   id={`correct-option${index + 1}`}
