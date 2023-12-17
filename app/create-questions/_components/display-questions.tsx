@@ -12,7 +12,7 @@ const Question = ({ id, content }: QuestionProps) => {
   return (
     <form
       action={deleteQuestionWithId}
-      className="flex items-center gap-4 space-y-4"
+      className="flex items-center gap-4 space-y-4 justify-center"
     >
       <p>Content: {content} </p>
       <FormDeleteButton />

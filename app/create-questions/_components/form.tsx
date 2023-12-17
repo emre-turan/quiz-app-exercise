@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { FormSubmit } from "@/components/form/form-submit";
+import { FormTextarea } from "@/components/form/form-textarea";
 
 const Form = () => {
   const { execute, fieldErrors } = useAction(createQuestion, {
@@ -63,14 +64,20 @@ const Form = () => {
       <CardContent>
         <form className="space-y-4" action={onSubmit}>
           <div className="space-y-2">
-            <FormInput
+            {/* <FormInput
               errors={fieldErrors}
               name="content"
               label="Question"
               placeholder="Enter a question"
+            /> */}
+            <FormTextarea
+              id="content"
+              label="Question"
+              placeholder="Enter a question"
+              errors={fieldErrors}
             />
           </div>
-          {/* <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div className="flex justify-between items-center">
               <Label htmlFor="answers">Answers</Label>
               <Label htmlFor="correct answers">Correct Answers</Label>
@@ -89,8 +96,7 @@ const Form = () => {
                 />
               </div>
             ))}
-          </div> */}
-
+          </div>
           <FormSubmit className="w-full">Submit Question</FormSubmit>
         </form>
       </CardContent>

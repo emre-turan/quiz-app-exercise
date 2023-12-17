@@ -11,14 +11,14 @@ export const CreateQuestion = z.object({
     }),
 });
 
-export const CreateAnswer = z.object({
-  content: z
-    .string({
-      required_error: "Content is required",
-      invalid_type_error: "Content is required",
-    })
-    .min(3, {
-      message: "Answer is too short",
-    }),
-  isCorrect: z.boolean(),
-});
+// export const CreateAnswer = z.object({
+//   content: z
+//     .string({
+//       required_error: "Content is required",
+//       invalid_type_error: "Content is required",
+//     })
+//     .min(3, {
+//       message: "Answer is too short",
+//     }),
+//   isCorrect: z.boolean(),
+// });
