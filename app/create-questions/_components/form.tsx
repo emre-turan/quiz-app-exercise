@@ -15,6 +15,7 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { FormSubmit } from "@/components/form/form-submit";
 
 const Form = () => {
   const { execute, fieldErrors } = useAction(createQuestion, {
@@ -47,7 +48,7 @@ const Form = () => {
       },
     ];
 
-    execute({ content, answers });
+    execute({ content });
   };
 
   return (
@@ -69,10 +70,10 @@ const Form = () => {
               placeholder="Enter a question"
             />
           </div>
-          <div className="grid grid-cols-1 gap-4">
+          {/* <div className="grid grid-cols-1 gap-4">
             <div className="flex justify-between items-center">
-              <Label>Answers</Label>
-              <Label>Correct Answers</Label>
+              <Label htmlFor="answers">Answers</Label>
+              <Label htmlFor="correct answers">Correct Answers</Label>
             </div>
             {Array.from({ length: 4 }).map((_, index) => (
               <div key={index} className="flex items-center justify-between">
@@ -88,8 +89,9 @@ const Form = () => {
                 />
               </div>
             ))}
-          </div>
-          <FormButton />
+          </div> */}
+
+          <FormSubmit className="w-full">Submit Question</FormSubmit>
         </form>
       </CardContent>
     </Card>
