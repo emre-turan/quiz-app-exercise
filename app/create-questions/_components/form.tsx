@@ -4,7 +4,6 @@ import { createQuestion } from "@/app/actions/create-questions";
 
 import FormInput from "./form-input";
 import FormCheckbox from "./form-checkbox";
-import FormButton from "./form-submit-button";
 import { useAction } from "@/hooks/use-action";
 
 import {
@@ -32,24 +31,24 @@ const Form = () => {
     const content = formData.get("content") as string;
     const answers = [
       {
-        content: formData.get("option1"),
+        content: (formData.get("option1") as string) || "",
         isCorrect: formData.get("correct-option1") === "on",
       },
       {
-        content: formData.get("option2"),
+        content: (formData.get("option2") as string) || "",
         isCorrect: formData.get("correct-option2") === "on",
       },
       {
-        content: formData.get("option3"),
+        content: (formData.get("option3") as string) || "",
         isCorrect: formData.get("correct-option3") === "on",
       },
       {
-        content: formData.get("option4"),
+        content: (formData.get("option4") as string) || "",
         isCorrect: formData.get("correct-option4") === "on",
       },
     ];
 
-    execute({ content });
+    execute({ content, answers });
   };
 
   return (
@@ -64,12 +63,6 @@ const Form = () => {
       <CardContent>
         <form className="space-y-4" action={onSubmit}>
           <div className="space-y-2">
-            {/* <FormInput
-              errors={fieldErrors}
-              name="content"
-              label="Question"
-              placeholder="Enter a question"
-            /> */}
             <FormTextarea
               id="content"
               label="Question"
