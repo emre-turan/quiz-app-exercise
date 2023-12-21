@@ -2,23 +2,11 @@ import Logo from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { UserButton } from "@clerk/nextjs";
-import { ArrowRight } from "lucide-react";
+import { UserButton, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs";
-import Link from "next/link";
 import QuizModal from "@/components/quiz-modal";
 import CountdownTimer from "@/components/countdown";
 import Footer from "@/components/footer";
-
-function SignInButton() {
-  return (
-    <Link href="/sign-in">
-      <Button variant="outline">
-        Sign In <ArrowRight className="ml-2 size-4" />
-      </Button>
-    </Link>
-  );
-}
 
 async function Header({ user }: any) {
   return (
@@ -26,8 +14,21 @@ async function Header({ user }: any) {
       <div className="mx-auto flex items-center justify-between">
         <Logo className="size-12" />
         <div className="flex items-center justify-end gap-4 p-4">
+          {user ? (
+            <UserButton afterSignOutUrl="/" />
+          ) : (
+            <>
+              <SignInButton mode="modal">
+                <Button variant="ghost" size="sm">
+                  Sign in
+                </Button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <Button size="sm">Sign Up</Button>
+              </SignUpButton>
+            </>
+          )}
           <ModeToggle />
-          {user ? <UserButton afterSignOutUrl="/" /> : <SignInButton />}
         </div>
       </div>
     </Container>
