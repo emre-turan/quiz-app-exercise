@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import { createQuestion } from "@/app/actions/create-questions";
+import { toast } from "sonner";
 
 import FormInput from "./form-input";
 import FormCheckbox from "../../../components/form/form-checkbox";
@@ -18,12 +20,18 @@ import { FormSubmit } from "@/components/form/form-submit";
 import { FormTextarea } from "@/components/form/form-textarea";
 
 const Form = () => {
+  const formRef = useRef<HTMLFormElement | null>(null);
   const { execute, fieldErrors } = useAction(createQuestion, {
     onSuccess: (data) => {
       console.log(data, "SUCCESS");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      toast.success("Question created successfully!");
     },
     onError: (error) => {
       console.error(error);
+      toast.error("Something went wrong!");
     },
   });
 
@@ -61,7 +69,7 @@ const Form = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="space-y-4" action={onSubmit}>
+        <form className="space-y-4" action={onSubmit} ref={formRef}>
           <div className="space-y-2">
             <FormTextarea
               id="content"
@@ -71,7 +79,7 @@ const Form = () => {
             />
           </div>
           <div className="grid grid-cols-1 gap-4">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <Label htmlFor="answers">Answers</Label>
               <Label htmlFor="correct answers">Correct Answers</Label>
             </div>
