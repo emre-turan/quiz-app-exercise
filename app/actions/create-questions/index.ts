@@ -33,7 +33,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
             isCorrect: answer.isCorrect,
             questionId: newQuestion.id,
           },
-        })
+        }),
       );
 
       await Promise.all(answerPromises);
