@@ -12,11 +12,12 @@ interface QuizQuestionProps {
 }
 
 const QuizModal = ({ questions }: QuizQuestionProps) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [answerIdx, setAnswerIdx] = useState<number | null>(null);
   const [answer, setAnswer] = useState<boolean | null>(null);
   const [result, setResult] = useState(resultInitialState);
-  const [showResult, setShowResult] = useState(false);
+  const [showResult, setShowResult] = useState<boolean>(false);
+  const [showAnswerTimer, setShowAnswerTimer] = useState<boolean>(true);
 
   const { question, choices, correctAnswer } = questions[currentQuestion];
 
@@ -27,10 +28,11 @@ const QuizModal = ({ questions }: QuizQuestionProps) => {
     } else setAnswer(false);
   };
 
-  const onClickNext = () => {
+  const onClickNext = (finalAnswer: boolean | null) => {
     setAnswerIdx(null);
+    setShowAnswerTimer(false);
     setResult((prev) =>
-      answer
+      finalAnswer
         ? {
             ...prev,
             score: prev.score + 5,
@@ -48,6 +50,9 @@ const QuizModal = ({ questions }: QuizQuestionProps) => {
       setCurrentQuestion(0);
       setShowResult(true);
     }
+    setTimeout(() => {
+      setShowAnswerTimer(true);
+    });
   };
 
   const onTryAgain = () => {
@@ -55,13 +60,18 @@ const QuizModal = ({ questions }: QuizQuestionProps) => {
     setShowResult(false);
   };
 
-  const handleTimeUp = () => {};
+  const handleTimeUp = () => {
+    setAnswer(false);
+    onClickNext(false);
+  };
 
   return (
     <div className="relative mt-20 w-[750px] rounded-lg border p-10">
       {!showResult ? (
         <>
-          <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
+          {showAnswerTimer && (
+            <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
+          )}
           <span className="text-2xl">{currentQuestion + 1}</span>/
           <span>{questions.length}</span>
           <h2 className="my-4 text-lg">{question}</h2>
@@ -86,7 +96,7 @@ const QuizModal = ({ questions }: QuizQuestionProps) => {
             <Button
               className="w-full"
               disabled={answerIdx === null}
-              onClick={onClickNext}
+              onClick={() => onClickNext(answer)}
             >
               {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
             </Button>

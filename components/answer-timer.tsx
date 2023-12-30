@@ -37,8 +37,15 @@ const AnswerTimer = ({ duration, onTimeUp }: AnswerTimerProps) => {
       <div
         style={{
           width: `${progressLoaded}%`,
+          backgroundColor: `${
+            progressLoaded < 40
+              ? "lightgreen"
+              : progressLoaded < 80
+                ? "orange"
+                : "red"
+          }`,
         }}
-        className="h-1.5 w-0 bg-red-500 duration-1000 ease-linear"
+        className="h-2 w-[0] duration-1000 ease-linear"
       ></div>
     </div>
   );
