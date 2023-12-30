@@ -8,6 +8,8 @@ import QuizModal from "@/components/quiz-modal";
 import CountdownTimer from "@/components/countdown";
 import Footer from "@/components/footer";
 
+import { jsQuiz } from "@/lib/questions";
+
 async function Header({ user }: any) {
   return (
     <Container variant="breakpointPadded">
@@ -47,8 +49,8 @@ export default async function Home() {
             <h1 className="text-3xl font-bold"> Quiz App</h1>
             {user ? <div>Welcome {user.firstName} </div> : ""}
           </div>
-          <QuizModal />
-          <CountdownTimer />
+          <QuizModal questions={jsQuiz.questions[0]} />
+          {/* <CountdownTimer /> */}
         </Container>
       </div>
       <Footer />
