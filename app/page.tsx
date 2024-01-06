@@ -10,6 +10,7 @@ import Footer from "@/components/footer";
 
 import { jsQuiz } from "@/lib/questions";
 import { SparklesPreview } from "@/components/sparkles-preview";
+import BorderMagicButton from "@/components/ui/border-magic-button";
 
 async function Header({ user }: any) {
   return (
@@ -27,7 +28,7 @@ async function Header({ user }: any) {
                 </Button>
               </SignInButton>
               <SignUpButton mode="modal">
-                <Button size="sm">Sign Up</Button>
+                <BorderMagicButton>Sign Up</BorderMagicButton>
               </SignUpButton>
             </>
           )}
