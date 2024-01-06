@@ -9,6 +9,7 @@ import CountdownTimer from "@/components/countdown";
 import Footer from "@/components/footer";
 
 import { jsQuiz } from "@/lib/questions";
+import { SparklesPreview } from "@/components/sparkles-preview";
 
 async function Header({ user }: any) {
   return (
@@ -50,6 +51,7 @@ export default async function Home() {
             {user ? <div>Welcome {user.firstName} </div> : ""}
           </div>
           <QuizModal questions={jsQuiz.questions[0]} />
+          <SparklesPreview />
           {/* <CountdownTimer /> */}
         </Container>
       </div>

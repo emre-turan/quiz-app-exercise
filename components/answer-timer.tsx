@@ -33,7 +33,7 @@ const AnswerTimer = ({ duration, onTimeUp }: AnswerTimerProps) => {
   }, [counter]);
 
   return (
-    <div className="absolute left-0 top-0 max-w-full border-b border-solid ">
+    <div className="absolute left-0 top-0 max-w-full border-b border-solid">
       <div
         style={{
           width: `${progressLoaded}%`,
